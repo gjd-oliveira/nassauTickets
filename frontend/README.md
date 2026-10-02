@@ -1,16 +1,31 @@
-# React + Vite
+# nassauTickets - frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Executar com Vite
 
-Currently, two official plugins are available:
+1. Instale o [Node.js](https://nodejs.org/) se ainda não estiver instalado.
+2. Abra um terminal nesta pasta (`frontend`) e execute:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+   ```sh
+   npm install
+   npm run dev
+   ```
 
-## React Compiler
+3. Abra no navegador o endereço local mostrado pelo Vite (normalmente `http://localhost:5173`).
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Executar com a extensão Live Server
 
-## Expanding the ESLint configuration
+O Live Server serve arquivos estáticos e não compila React/JSX. Gere a versão estática e abra `dist/index.html` com a extensão:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```sh
+npm run build
+```
+
+Para recompilar automaticamente ao editar os arquivos, deixe este comando rodando no terminal:
+
+```sh
+npm run build:watch
+```
+
+Depois, no VS Code, clique com o botão direito em `dist/index.html` e escolha **Open with Live Server**. Deixe o terminal do build aberto enquanto trabalha. Para desenvolvimento React com recarga automática, prefira `npm run dev`.
+
+O modo de atendente e os relatórios usam um login demonstrativo: `atendente` / `lab123`. Os dados de senhas ficam salvos no `localStorage` do navegador. A emissão está habilitada das 7h às 17h.
