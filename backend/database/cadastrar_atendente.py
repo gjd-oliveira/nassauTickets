@@ -1,6 +1,6 @@
 #Área de teste do banco de dados
 #usando para cadastros de funcionarios
-import mysql.connector
+import mysql.connector # type: ignore
 
 configuracao = {
     'host': 'localhost',
