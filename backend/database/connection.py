@@ -1,28 +1,51 @@
 import os
-import mysql.connector
+from pathlib import Path
+
 from dotenv import load_dotenv
+from sqlalchemy import create_engine
+from sqlalchemy.engine import URL
+from sqlalchemy.orm import declarative_base, sessionmaker
 
-# 1. Carrega as variáveis do arquivo .env para a memória do sistema
-load_dotenv()
+# Carrega as variáveis do arquivo .env da raiz do projeto
+load_dotenv(dotenv_path=Path(__file__).resolve().parents[2] / ".env")
 
-# 2. Busca os dados de forma escondida e segura
-configuracao = {
-    'host': os.getenv('DB_HOST'),
-    'port': int(os.getenv('DB_PORT')), # O port precisa ser um número inteiro
-    'user': os.getenv('DB_USER'),
-    'password': os.getenv('DB_PASSWORD'),
-    'database': os.getenv('DB_NAME')
-}
 
+def _get_env(name: str) -> str:
+    value = os.getenv(name)
+    if value is None or value == "":
+        raise RuntimeError(f"Variável de ambiente ausente: {name}")
+    return value
+
+
+DB_USER = _get_env("DB_USER")
+DB_PASSWORD = _get_env("DB_PASSWORD")
+DB_HOST = _get_env("DB_HOST")
 try:
-    # 3. Conecta normalmente
-    conexao = mysql.connector.connect(**configuracao)
-    cursor = conexao.cursor()
-    print("🔒 Conectado ao MySQL com sucesso e com total segurança usando .env!")
+    DB_PORT = int(_get_env("DB_PORT"))
+except ValueError as error:
+    raise RuntimeError("A variável de ambiente DB_PORT deve ser numérica") from error
+DB_NAME = _get_env("DB_NAME")
 
-    # Daqui para baixo o seu código continua igual...
-    cursor.close()
-    conexao.close()
+# Monta a URL de conexão para o MySQL
+DATABASE_URL = URL.create(
+    drivername="mysql+pymysql",
+    username=DB_USER,
+    password=DB_PASSWORD,
+    host=DB_HOST,
+    port=DB_PORT,
+    database=DB_NAME,
+)
 
-except Exception as erro:
-    print(f"❌ Erro de conexão: {erro}")
+# Cria o mecanismo do SQLAlchemy
+engine = create_engine(
+    DATABASE_URL,
+    echo=os.getenv("APP_ENV", "").lower() == "development",
+    pool_pre_ping=True,
+)
+
+# Cria a fábrica de sessões para o CRUD
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+
+# Base essencial para os models herdarem
+Base = declarative_base()
