@@ -1,14 +1,19 @@
+-- SQLBook: Code
 -- Script de migração gerado no DBeaver para o Banco de Dados MySQL
 -- Criação das tabelas de Usuários, Senhas e Atendimentos de forma segura
+
+USE sistema_atendimento;
 
 CREATE TABLE IF NOT EXISTS usuarios (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
-    login VARCHAR(50) NOT NULL UNIQUE,
+    login VARCHAR(50) NOT NULL,
     senha_hash VARCHAR(255) NOT NULL,
-    perfil VARCHAR(30) NOT NULL DEFAULT 'Atendente',
-    INDEX idx_usuarios_login (login)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+    perfil ENUM('AGENTE', 'GESTOR') NOT NULL DEFAULT 'AGENTE',
+    ativo TINYINT(1) NOT NULL DEFAULT 1,
+    criado_em TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT uq_usuarios_login UNIQUE (login)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE IF NOT EXISTS senhas (
     id INT AUTO_INCREMENT PRIMARY KEY,

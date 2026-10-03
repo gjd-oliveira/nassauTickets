@@ -27,7 +27,7 @@ from backend.database.connection import Base
 class Atendimento(Base):
     __tablename__ = "atendimentos"
 
-    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     senha_id = Column(Integer, ForeignKey("senhas.id", ondelete="CASCADE"), nullable=False, unique=True)
     atendente_id = Column(Integer, ForeignKey("usuarios.id", ondelete="RESTRICT"), nullable=False)
     guiche = Column(String(10), nullable=False)

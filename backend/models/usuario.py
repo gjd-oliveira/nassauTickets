@@ -17,24 +17,52 @@
 # Modelo de usuário do sistema.
 # -------------------------------------------------------------------------
 
-from sqlalchemy import Column, Integer, String, text
+import enum
+
+from sqlalchemy import (
+    Boolean,
+    Column,
+    Enum,
+    Integer,
+    String,
+    TIMESTAMP,
+    UniqueConstraint,
+    text,
+)
 from sqlalchemy.orm import relationship
-# Importa subindo para a raiz 'backend' e entrando em 'database'
+
 from backend.database.connection import Base
+
+
+class PerfilUsuario(enum.Enum):
+    AGENTE = "AGENTE"
+    GESTOR = "GESTOR"
+
 
 class Usuario(Base):
     __tablename__ = "usuarios"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     nome = Column(String(100), nullable=False)
-    login = Column(String(50), unique=True, nullable=False, index=True)
+    login = Column(String(50), nullable=False)
     senha_hash = Column(String(255), nullable=False)
     perfil = Column(
-        String(30),
+        Enum(
+            PerfilUsuario,
+            values_callable=lambda enum_type: [perfil.value for perfil in enum_type],
+        ),
         nullable=False,
-        default="Atendente",
-        server_default=text("'Atendente'"),
+        default=PerfilUsuario.AGENTE,
+        server_default=text("'AGENTE'"),
     )
+    ativo = Column(Boolean, nullable=False, default=True, server_default=text("1"))
+    criado_em = Column(
+        TIMESTAMP,
+        server_default=text("CURRENT_TIMESTAMP"),
+        nullable=True,
+    )
+
+    __table_args__ = (UniqueConstraint("login", name="uq_usuarios_login"),)
 
     # Relacionamento com Atendimentos
     atendimentos = relationship("Atendimento", back_populates="atendente")

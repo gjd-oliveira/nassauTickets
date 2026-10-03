@@ -37,7 +37,7 @@ class EstadoSenha(enum.Enum):
 class Senha(Base):
     __tablename__ = "senhas"
 
-    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     numero_senha = Column(String(20), nullable=False, unique=True)
     tipo = Column(Enum(TipoSenha), nullable=False)
     estado_atual = Column(
