@@ -3,11 +3,15 @@
 function Botao(props) {
    
    function clicar() {
-     props.aoClicar(props.tipo);
+     if (props.tipo) {
+        props.aoClicar(props.tipo);
+     } else {
+        props.aoClicar();
+     }
    }
    
     return (
-        <button onClick={clicar}>
+        <button className="botao"onClick={clicar}>
             {props.texto}
         </button>
     );

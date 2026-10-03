@@ -5,14 +5,21 @@ import Botao from '../components/Botao.jsx';
 
 function EmissaoSenha() {
    const [tipoSelecionado, setTipoSelecionado] = useState('');
-    
+   const [senha, setSenha] = useState('');
+
    function selecionarTipo(tipo) {
         setTipoSelecionado(tipo);
-   }
+        setSenha('');
+    }
    
+   function emitirSenha () {
+    setSenha(tipoSelecionado + '001');
+   }
+
    return (
-        <div>
-            <h1>Emissão de Senha</h1>
+        <div className= "emissão-senha">
+            <div className="cartao-emissao">
+            <h1 className= "titulo-emissao"> Emissão de Senha </h1>
 
             <p>Escolha o tipo de atendimento:</p>
         
@@ -34,8 +41,24 @@ function EmissaoSenha() {
             aoClicar={selecionarTipo}
             />
 
+            {tipoSelecionado !== '' && (
             <p>Tipo selecionado: {tipoSelecionado}</p>
-        </div>
+            )}
+           
+           {tipoSelecionado !== '' && (
+            <Botao
+            texto= "Emitir senha"
+            aoClicar={emitirSenha}
+            />
+           )}
+           
+           {senha !== '' && (
+            <p>Sua senha é: {senha}</p>
+           )}
+           
+           
+            </div>
+            </div>
     );
 }
 
