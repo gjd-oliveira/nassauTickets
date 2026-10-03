@@ -1,56 +1,100 @@
-# Configuração da conexão com o banco de dados.
-#
-# Responsabilidades:
-# - Configurar a conexão com o MySQL.
-# - Disponibilizar a conexão para as demais partes da aplicação.
-# - Centralizar as configurações relacionadas ao banco.
-#
-# Credenciais e informações sensíveis NÃO devem ser
-# armazenadas diretamente no código-fonte.
 import mysql.connector
 
-# Conectamos primeiro sem especificar o banco de dados
+# 1. Configuração de acesso (Conecta direto ao MySQL do seu computador)
 configuracao = {
     'host': 'localhost',
     'port': 3306,
     'user': 'root',
-    'password': '1412'  # COLOQUE SUA SENHA DO MYSQL AQUI
+    'password': '1412'  # ⚠️ COLOQUE SUA SENHA DO MYSQL AQUI
 }
 
 try:
-    # 1. Abre a conexão geral
+    # 2. Abre a conexão com o servidor
     conexao = mysql.connector.connect(**configuracao)
     cursor = conexao.cursor()
-    print("🚀 Conectado ao MySQL com sucesso pelo Visual Studio!")
+    print("🚀 Conectado ao MySQL com sucesso!")
 
-    # 2. CRIA O BANCO DE DADOS AUTOMATICAMENTE SE ELE NÃO EXISTIR
-    cursor.execute("CREATE DATABASE IF NOT EXISTS nassautickets")
-    print("📂 Banco de dados 'nassautickets' verificado/criado.")
+    # 3. Cria o banco de dados se ele não existir
+    cursor.execute("CREATE DATABASE IF NOT EXISTS sistema_atendimento")
+    print("📂 Banco de dados 'sistema_atendimento' verificado/criado.")
     
-    # Diz ao Python para entrar e usar o banco nassautickets daqui para frente
-    cursor.execute("USE nassautickets")
+    # Entra no banco de dados recém-criado
+    cursor.execute("USE sistema_atendimento")
 
-    # 3. Cria a tabela de clientes/ingressos lá dentro
+    # ============================================================================
+    # 4. EXECUTANDO OS COMANDOS SQL (Criando as tabelas e índices)
+    # ============================================================================
+
+    # Tabela 1: Usuários
+    print("⏳ Criando tabela 'usuarios'...")
     cursor.execute("""
-        CREATE TABLE IF NOT EXISTS clientes (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            nome VARCHAR(100),
-            telefone VARCHAR(20)
-        )
+        CREATE TABLE IF NOT EXISTS usuarios (
+            id INT AUTO_INCREMENT,
+            nome VARCHAR(100) NOT NULL,
+            login VARCHAR(50) NOT NULL,
+            senha_hash VARCHAR(255) NOT NULL,
+            perfil ENUM('AGENTE', 'GESTOR') NOT NULL DEFAULT 'AGENTE',
+            ativo BOOLEAN NOT NULL DEFAULT TRUE,
+            criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            
+            CONSTRAINT pk_usuarios PRIMARY KEY (id),
+            CONSTRAINT uq_usuarios_login UNIQUE (login)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
     """)
-    print("📋 Tabela 'clientes' pronta.")
 
-    # 4. Insere um cliente de teste
-    comando_sql = "INSERT INTO clientes (nome, telephone) VALUES (%s, %s)" if False else "INSERT INTO clientes (nome, telefone) VALUES (%s, %s)"
-    dados_cliente = ("João Souza", "11999999999")
-    
-    cursor.execute(comando_sql, dados_cliente)
-    conexao.commit() 
-    print(f"✅ {dados_cliente[0]} cadastrado com sucesso no banco nassautickets!")
+    # Tabela 2: Tickets
+    print("⏳ Criando tabela 'tickets'...")
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS tickets (
+            codigo VARCHAR(15),
+            tipo ENUM('SP', 'SG', 'SE') NOT NULL,
+            estado ENUM('EMITIDO', 'CHAMADO', 'EM_ATENDIMENTO', 'FINALIZADO', 'CANCELADO', 'AUSENTE') NOT NULL DEFAULT 'EMITIDO',
+            criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            
+            CONSTRAINT pk_tickets PRIMARY KEY (codigo)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+    """)
 
-    # 5. Fecha as conexões
+    # Tabela 3: Atendimentos & Auditoria
+    print("⏳ Criando tabela 'atendimentos_auditoria'...")
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS atendimentos_auditoria (
+            id INT AUTO_INCREMENT,
+            ticket_codigo VARCHAR(15) NOT NULL,
+            usuario_id INT DEFAULT NULL,
+            guiche INT DEFAULT NULL,
+            data_emissao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            data_primeira_chamada TIMESTAMP NULL DEFAULT NULL,
+            data_segunda_chamada TIMESTAMP NULL DEFAULT NULL,
+            data_inicio_atendimento TIMESTAMP NULL DEFAULT NULL,
+            data_finalizacao TIMESTAMP NULL DEFAULT NULL,
+            
+            CONSTRAINT pk_atendimentos PRIMARY KEY (id),
+            CONSTRAINT uq_atendimentos_ticket UNIQUE (ticket_codigo),
+            CONSTRAINT fk_atendimentos_tickets FOREIGN KEY (ticket_codigo) 
+                REFERENCES tickets (codigo) ON DELETE CASCADE,
+            CONSTRAINT fk_atendimentos_usuarios FOREIGN KEY (usuario_id) 
+                REFERENCES usuarios (id) ON UPDATE CASCADE,
+            CONSTRAINT chk_guiche_positivo CHECK (guiche > 0)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+    """)
+
+    # Índices de Performance (Se já existirem, o MySQL avisa, então usamos try/except rápido)
+    print("⏳ Criando índices de otimização...")
+    try:
+        cursor.execute("CREATE INDEX idx_tickets_estado ON tickets(estado);")
+        cursor.execute("CREATE INDEX idx_auditoria_datas ON atendimentos_auditoria(data_emissao);")
+    except mysql.connector.Error as e:
+        # Se o índice já existir, ignora o erro e continua
+        if e.errno != 1061: 
+            raise e
+
+    print("🎯 Todas as tabelas e índices foram estruturados com sucesso!")
+
+    # 5. Fecha as conexões com segurança
     cursor.close()
     conexao.close()
+    print("🔌 Conexão fechada. Seu banco está pronto no DBeaver!")
 
 except Exception as erro:
-    print(f"❌ Opa, aconteceu um erro: {erro}")
+    print(f"❌ Opa, aconteceu um erro na criação: {erro}")
