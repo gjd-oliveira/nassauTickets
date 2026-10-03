@@ -34,6 +34,7 @@ DATABASE_URL = URL.create(
     host=DB_HOST,
     port=DB_PORT,
     database=DB_NAME,
+    query={"charset": "utf8mb4"},
 )
 
 # Cria o mecanismo do SQLAlchemy
