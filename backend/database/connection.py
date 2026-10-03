@@ -1,4 +1,4 @@
-import mysql.connector
+import mysql.connector # type: ignore
 
 # 1. Configuração de acesso (Conecta direto ao MySQL do seu computador)
 configuracao = {
