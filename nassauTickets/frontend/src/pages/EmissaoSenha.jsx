@@ -27,18 +27,21 @@ function EmissaoSenha() {
             texto= "Senha prioridade" 
             tipo= "SP" 
             aoClicar={selecionarTipo}
+            classe= "botao-atendimento"
             />
            
             <Botao 
             texto= "Senha geral" 
             tipo= "SG" 
             aoClicar={selecionarTipo}
+            classe= "botao-atendimento"
             />
             
             <Botao 
             texto= "Retirada de exames" 
             tipo="SE" 
             aoClicar={selecionarTipo}
+            classe= "botao-atendimento"
             />
 
             {tipoSelecionado !== '' && (
@@ -49,6 +52,7 @@ function EmissaoSenha() {
             <Botao
             texto= "Emitir senha"
             aoClicar={emitirSenha}
+            classe= "botao-emitir"
             />
            )}
            

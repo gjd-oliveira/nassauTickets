@@ -11,7 +11,7 @@ function Botao(props) {
    }
    
     return (
-        <button className="botao"onClick={clicar}>
+        <button className={props.classe || "botao"} onClick={clicar}>
             {props.texto}
         </button>
     );

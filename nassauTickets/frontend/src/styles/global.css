@@ -38,5 +38,47 @@ h1 {
   padding: 30px;
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500%;
 }
 
+.botao-atendimento {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 20px;
+  margin: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.botao-atendimento:hover {
+  background-color: #1d4ed8;
+}
+
+.botao-emitir {
+  background-color: #16a34a;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 14px 25px;
+  margin: 15px;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.botao-emitir:hover {
+  background-color: #15803d;
+}
+
+@media (max-width: 600px) {
+  .cartao-emissao {
+    padding: 15px;
+  }
+
+  .titulo-emissao {
+    font-size: 25px;
+  }
+}
