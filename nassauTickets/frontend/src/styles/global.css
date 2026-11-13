@@ -22,8 +22,10 @@ h1 {
 }
 
 .titulo-emissao {
-  font-size: 32px;
-  margin-bottom: 20px;
+  font-size: 30px;
+  font-weight: 700;
+  color: #1e3a8a;
+  margin-bottom: 15px;
 }
 
 .botao {
@@ -39,38 +41,46 @@ h1 {
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 500%;
+  max-width: 500px;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e2e8f0;
 }
 
 .botao-atendimento {
   background-color: #2563eb;
   color: white;
   border: none;
-  border-radius: 6px;
-  padding: 12px 20px;
-  margin: 5px;
+  border-radius: 10px;
+  padding: 15px 25px;
+  margin: 8px;
   font-size: 16px;
+  font-weight: 600;
   cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
 }
 
 .botao-atendimento:hover {
   background-color: #1d4ed8;
+  transform: translateY(-2px);
 }
 
 .botao-emitir {
   background-color: #16a34a;
   color: white;
   border: none;
-  border-radius: 6px;
-  padding: 14px 25px;
-  margin: 15px;
+  border-radius: 10px;
+  padding: 15px 30px;
+  margin-top: 20px;
   font-size: 17px;
-  font-weight: bold;
+  font-weight: 700;
   cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
 }
 
 .botao-emitir:hover {
   background-color: #15803d;
+  transform: translateY(-2px);
 }
 
 @media (max-width: 600px) {
@@ -81,4 +91,101 @@ h1 {
   .titulo-emissao {
     font-size: 25px;
   }
+}
+
+.pagina-emissao {
+  min-height: 100vh;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  background-color: #f1f5f9;
+  padding: 30px; 
+}
+
+.cabecalho {
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.cabecalho h1 {
+  color: #1e3a8a;
+  font-size: 36px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin-bottom: 8px;
+}
+
+.cabecalho h1::after {
+  content:"";
+  display:block;
+  width: 55px;
+  height: 4px;
+  background-color: #2563eb;
+  border-radius: 10px;
+  margin: 10px auto 0;
+}
+
+.cabecalho p {
+  color: #64748b;
+  font-size: 16px;
+  margin-top: 0px;
+}
+
+.senha-gerada {
+  background-color: #eff6ff;
+  border: 2px solid #bfdbfe;
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 25px;
+}
+
+.senha-gerada p {
+  color: #475569;
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.senha-gerada h2 {
+  color: #1d4ed8;
+  font-size: 36px;
+  font-weight: 700;
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+  .pagina-emissao {
+    padding: 15px;
+  }
+
+  .cartao-emissao {
+    padding: 20px;
+  }
+
+  .titulo-emissao{
+    font-size: 25px;
+  }
+
+  .botao-atendimento {
+    width: 100%;
+    margin: 6px 0;
+  }
+
+  .botao-emitir {
+    width: 100%;
+  }
+
+  .botao-emitir h2 {
+    font-size: 30px;
+  }
+}
+
+.botao-emitir:disabled {
+  background-color: #94a3b8;
+  cursor: not-allowed;
+  transform: none;
+  opacity: 0.8;
 }

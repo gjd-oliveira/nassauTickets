@@ -1,12 +1,10 @@
 
-import EmissaoSenha from './pages/EmissaoSenha.jsx';
+import EmissaoSenha from './pages/Emissaosenha.jsx';
 
 
 function App() {
   return (
     <div>
-      <h1>NassauTickets</h1>
-      
       <EmissaoSenha />
     </div>
   );

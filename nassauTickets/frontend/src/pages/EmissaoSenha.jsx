@@ -2,22 +2,45 @@
 
 import {useState} from 'react';
 import Botao from '../components/Botao.jsx';
+import {solicitarEmissaoSenha} from '../services/senhasService.js';
 
 function EmissaoSenha() {
    const [tipoSelecionado, setTipoSelecionado] = useState('');
    const [senha, setSenha] = useState('');
+   const [carregando, setCarregando] = useState(false);
 
    function selecionarTipo(tipo) {
         setTipoSelecionado(tipo);
         setSenha('');
     }
    
-   function emitirSenha () {
-    setSenha(tipoSelecionado + '001');
+   async function emitirSenha () {
+        setCarregando(true);
+
+        try {
+        const resultado= await solicitarEmissaoSenha(tipoSelecionado);
+
+        setSenha(resultado.numero);
+
+        } catch (erro) {
+            console.error('Erro ao emitir a senha:', erro);
+            alert('Não foi possível emitir a sua senha. Por favor, tente novamente.');
+        
+        } finally {
+
+        setCarregando(false);
+    }
+
    }
 
    return (
-        <div className= "emissão-senha">
+        <main className= "pagina-emissao">
+            
+            <header className="cabecalho">
+                <h1>Nassau Tickets</h1>
+                <p>Sistema de Controle de Atendimento</p>
+            </header>
+            
             <div className="cartao-emissao">
             <h1 className= "titulo-emissao"> Emissão de Senha </h1>
 
@@ -50,19 +73,23 @@ function EmissaoSenha() {
            
            {tipoSelecionado !== '' && (
             <Botao
-            texto= "Emitir senha"
+            texto= {carregando ? "Emitindo..." : "Emitir senha"}
             aoClicar={emitirSenha}
             classe= "botao-emitir"
+            desabilitado={carregando}
             />
            )}
            
            {senha !== '' && (
-            <p>Sua senha é: {senha}</p>
+            <div className="senha-gerada">
+            <p>Sua senha é: </p>
+            <h2>{senha}</h2>
+            </div>
            )}
            
            
             </div>
-            </div>
+        </main>
     );
 }
 

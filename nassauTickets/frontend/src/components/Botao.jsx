@@ -11,7 +11,7 @@ function Botao(props) {
    }
    
     return (
-        <button className={props.classe || "botao"} onClick={clicar}>
+        <button className={props.classe || "botao"} onClick={clicar} disabled={props.desabilitado}>
             {props.texto}
         </button>
     );
