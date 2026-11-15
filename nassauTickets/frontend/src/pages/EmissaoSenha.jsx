@@ -44,7 +44,7 @@ function EmissaoSenha() {
             <div className="cartao-emissao">
             <h1 className= "titulo-emissao"> Emissão de Senha </h1>
 
-            <p>Escolha o tipo de atendimento:</p>
+            <p className="texto-orientacao" >Escolha o tipo de atendimento:</p>
         
             <Botao 
             texto= "Senha prioridade" 
