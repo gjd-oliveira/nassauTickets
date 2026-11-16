@@ -3,6 +3,7 @@
 import {useState} from 'react';
 import Botao from '../components/Botao.jsx';
 import {solicitarEmissaoSenha} from '../services/senhasService.js';
+import {Link} from 'react-router-dom';
 
 function EmissaoSenha() {
    const [tipoSelecionado, setTipoSelecionado] = useState('');
@@ -89,6 +90,9 @@ function EmissaoSenha() {
            
            
             </div>
+            <Link to="/inicio" className="link-navegacao">
+                Voltar para a página inicial
+            </Link>
         </main>
     );
 }
