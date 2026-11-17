@@ -1,0 +1,154 @@
+/* Estilo do Painel Público do Nassau Tickets */
+
+.pagina-painel {
+    min-height: 100vh;
+    padding: 35px 25px;
+    background-color: #f1f5f9;
+}
+
+.cabecalho-painel {
+    text-align: center;
+    padding: 20PX;
+    margin-bottom: 45px;
+    border-bottom: 1px solid #dbeafe;
+}
+
+.cabecalho-painel h1{
+    color: #173b68;
+    font-size: 36px;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.cabecalho-painel p {
+    color: #64748b;
+    font-size: 16px;
+}
+
+.senha-atual {
+    background-color: #ffffff;
+    max-width: 650px;
+    margin: 0 auto 35px;
+    padding: 40px 25px;
+    border-radius: 16px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    width: 100%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.senha-atual:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+.senha-atual h2 {
+    color: #173b68;
+    font-size: 24px;
+    margin-bottom: 25px;
+}
+
+.numero-senha {
+    color: #2563eb;
+    font-size: 32px;
+    font-weight: 800;
+    background-color: #eff6ff;
+    border: 2px solid #bfdbfe;
+    border-radius: 14px;
+    padding: 20px;
+    max-width: 300px;
+    margin: 0 auto 20px;
+}
+
+
+.senha-atual span {
+    color: #64748b;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.historico-senhas {
+    background-color: #ffffff;
+    max-width: 650px;
+    margin: 0 auto;
+    padding: 30px 25px;
+    border-radius: 16px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+    text-align: center;
+    width: 100%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.historico-senhas:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.10);
+}
+
+.historico-senhas h2 {
+    color: #173b68;
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+
+.historico-senhas p {
+    color: #64748b;
+    font-size: 15px;
+    line-height: 1.6;
+    padding: 10px;
+}
+
+.conteudo-painel {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+    width: 100%;
+}
+
+@media (max-width: 600px) {
+
+    .pagina-painel {
+        padding: 25px 15px;
+    }
+
+    .cabecalho-painel h1 {
+        font-size: 29px;
+    }
+
+    .senha-atual {
+        padding: 30px 15px;
+    }
+
+    .historico-senhas {
+        padding: 25px 15px;
+    }
+
+    .numero-senha {
+        font-size: 28px;
+    }
+
+}
+
+.status-atendimento {
+    display: inline-block;
+    background-color: #fef3c7;
+    color: #92400e;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.guiche-atendimento {
+    display: inline-block;
+    background-color: #f1f5f9;
+    color: #334155;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    border: 1px solid #e2e8f0;
+}

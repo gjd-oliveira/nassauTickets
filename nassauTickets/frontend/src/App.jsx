@@ -2,6 +2,7 @@
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import EmissaoSenha from './pages/EmissaoSenha.jsx';
 import PaginaInicial from './pages/PaginaInicial.jsx';
+import PainelPublico from './pages/PainelPublico.jsx';
 
 
 function App() {
@@ -10,6 +11,7 @@ function App() {
       <Routes>
         <Route path="/" element={<EmissaoSenha />} />
         <Route path="/inicio" element={<PaginaInicial />} />
+        <Route path="/painel" element={<PainelPublico />} />
       </Routes>
     </BrowserRouter>
   );

@@ -1,4 +1,4 @@
-// Fazendo a primeira página conceitual
+// Fazendo a parte de emissão de senha.
 
 import {useState} from 'react';
 import Botao from '../components/Botao.jsx';
