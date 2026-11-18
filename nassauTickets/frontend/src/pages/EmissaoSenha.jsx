@@ -16,7 +16,15 @@ function EmissaoSenha() {
     }
    
    async function emitirSenha () {
+
+        if (tipoSelecionado === '') {
+            alert('Por favor, selecione um tipo de atendimento.');
+            return;
+        }
+
         setCarregando(true);
+
+        setSenha('');
 
         try {
         const resultado= await solicitarEmissaoSenha(tipoSelecionado);
@@ -52,6 +60,7 @@ function EmissaoSenha() {
             tipo= "SP" 
             aoClicar={selecionarTipo}
             classe= "botao-atendimento"
+            desabilitado={carregando}
             />
            
             <Botao 
@@ -59,6 +68,7 @@ function EmissaoSenha() {
             tipo= "SG" 
             aoClicar={selecionarTipo}
             classe= "botao-atendimento"
+            desabilitado={carregando}
             />
             
             <Botao 
@@ -66,6 +76,7 @@ function EmissaoSenha() {
             tipo="SE" 
             aoClicar={selecionarTipo}
             classe= "botao-atendimento"
+            desabilitado={carregando}
             />
 
             {tipoSelecionado !== '' && (
@@ -80,11 +91,20 @@ function EmissaoSenha() {
             desabilitado={carregando}
             />
            )}
+
+           {carregando && (
+            <p className="mensagem-carregamento">
+                Emitindo sua senha, aguarde um instante...
+            </p>
+           )}
            
            {senha !== '' && (
             <div className="senha-gerada">
-            <p>Sua senha é: </p>
+            <p>Senha emitida com sucesso! </p>
             <h2>{senha}</h2>
+            <span className="tipo-atendimento">
+                Tipo de Atendimento: {tipoSelecionado}
+            </span>
             </div>
            )}
            

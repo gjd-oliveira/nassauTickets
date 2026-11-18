@@ -66,7 +66,7 @@ function PaginaInicial() {
                 </div>
             </section>
 
-            <footer classname="rodapé-inicial">
+            <footer className="rodape-inicial">
                 <p>Nassau Tickets © 2026</p>
                 <span>Sistema de Controle de Atendimento</span>
             </footer>
